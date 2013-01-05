@@ -1,0 +1,2 @@
+Update to the newest MurmurHash3 (from http://code.google.com/p/smhasher/)
+Implement a bitvector datatype.
