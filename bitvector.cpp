@@ -49,5 +49,5 @@ void Bitvector::clear(size_t bit_index)
 {
   std::pair<size_t, size_t> coord = this->bit_index_to_byte(bit_index);
   unsigned char *byte_ptr = &(this->data[coord.first]);
-  *byte_ptr &= ~(1 << x);
+  *byte_ptr &= ~(1 << coord.second);
 }

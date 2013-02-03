@@ -1,36 +1,39 @@
 #include <iostream>
 #include <cstdio>
+#include <cstdlib>
 #include "hash.h"
+#include "bitvector.h"
+#include "bloomfilter.h"
 
-/* 
- * calls hash() as defined in hash.cpp (MurmurHash) but clamps the value to the
- * interval [0, m].
- * TODO: how does this affect the distribution of values from MurmurHash, is it still
- * uniform?
- */
-unsigned int clamped_hash(const void *key, int len, unsigned int seed, int m)
+void generate_random_read(size_t read_length, char *store)
 {
-  unsigned int h = hash(key, len, seed);
-  return h%m;
-}
-
-void setbit(unsigned char *byte, int index) {
-  *byte |= (1<<index);
+  const char *symtable = "ACGT";
+  for(int i = 0; i < read_length; i++) {
+    int key = rand() % 4;
+    store[i] = symtable[key];
+  };
 };
+
+bool add_elements(Bloomfilter *filt, int count)
+{
+  //filt->add(
+  char buf[101];
+  buf[100] = '\0';
+  for(int c = 0; c < count; c++) {
+    generate_random_read(100, buf);
+    std::cout << buf << std::endl;
+  };
+  return true;
+};
+
 
 int main(int argc,char **argv)
 {
-  /*unsigned int seed = 0x01;
-  const char *k = "apa";
-  std::cout << hash(k, 3, seed) << std::endl;
-  */
-  
-  unsigned char a = 0;
-  printf("%d\n", a);
-  setbit(&a, 0);
-  printf("%d\n", a);
-  setbit(&a, 1);
-  printf("%d\n", a);
+  srand(time(NULL));
+  Bloomfilter bfilt(100, 3);
+
+  add_elements(&bfilt, 100);
+
 
   return 0;
 };

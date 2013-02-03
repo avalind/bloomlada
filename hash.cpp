@@ -61,4 +61,10 @@ unsigned int hash( const void * key, int len, unsigned int seed )
 	h ^= h >> 15;
 
 	return h;
-} 
+};
+
+unsigned int clamped_hash(const void *key, int len, unsigned int seed, int m)
+{
+  unsigned int h = hash(key, len, seed);
+  return h%m;
+};
